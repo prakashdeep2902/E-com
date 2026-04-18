@@ -1,0 +1,142 @@
+
+.about-page {
+  padding: 20px 30px;
+}
+
+/* Hero */
+
+.about-hero {
+  background: white;
+  border-radius: 12px;
+  padding: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.about-left,
+.about-right {
+  width: 50%;
+}
+
+.about-left h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.about-left p {
+  color: #666;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.about-right img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+/* Why Us */
+
+.why-us {
+  margin-top: 35px;
+}
+
+.why-us h2 {
+  margin-bottom: 20px;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.why-card {
+  background: white;
+  padding: 28px 20px;
+  border-radius: 10px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.why-card:hover {
+  transform: translateY(-5px);
+}
+
+.why-card svg {
+  font-size: 34px;
+  margin-bottom: 14px;
+}
+
+.why-card h3 {
+  margin-bottom: 10px;
+}
+
+.why-card p {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Story */
+
+.our-story {
+  margin-top: 35px;
+  background: white;
+  border-radius: 12px;
+  padding: 35px;
+}
+
+.our-story h2 {
+  margin-bottom: 15px;
+}
+
+.our-story p {
+  color: #666;
+  line-height: 1.8;
+}
+
+/* Footer */
+
+.about-footer {
+  margin-top: 35px;
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+/* Responsive */
+
+@media (max-width: 992px) {
+  .about-hero {
+    flex-direction: column;
+  }
+
+  .about-left,
+  .about-right {
+    width: 100%;
+  }
+
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-page {
+    padding: 15px;
+  }
+
+  .about-hero {
+    padding: 25px;
+  }
+
+  .about-left h1 {
+    font-size: 34px;
+  }
+
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 
-export const Apifetch = ({ Api, method }) => {
+export const Apifetch = ({ Api }) => {
   console.log(Api);
   const [res, setRes] = useState([]);
   const hasref = useRef(false);
@@ -11,8 +11,7 @@ export const Apifetch = ({ Api, method }) => {
 
     async function fetchData() {
       try {
-        const data = await axios[method](Api);
-
+        const data = await axios.get(Api);
         console.log(data);
       } catch (error) {
         setRes();

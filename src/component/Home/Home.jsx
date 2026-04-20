@@ -1,6 +1,5 @@
 import "./Home.css";
 import { FaStar } from "react-icons/fa";
-
 const Home = () => {
   const products = [
     {

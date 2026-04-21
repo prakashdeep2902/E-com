@@ -1,6 +1,5 @@
 import "./Home.css";
 import { FaStar } from "react-icons/fa";
-
 import { ApiContext } from "../../context/APiContext";
 import { useContext, useState } from "react";
 import { useCart } from "../../context/CartContext";
@@ -58,7 +57,7 @@ const Home = () => {
       <section className="featured-products">
         <h2>Featured Products</h2>
         <div className="product-grid">
-          {Products && Products.map((item) => {
+          {Products && Products?.map((item) => {
             return <div className="card" key={item.id}>
               <img src={item.thumbnail} alt={item.title} />
 

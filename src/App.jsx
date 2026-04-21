@@ -9,6 +9,7 @@ import { Apifetch } from "./helper/Apifetch";
 import ApiProvider from "./context/APiContext";
 import CartPage from "./component/cart/CartPage";
 import { CartProvider } from "./context/CartContext";
+import SingleProduct from "./component/singleproduct/SingleProduct";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/cart" element={<CartPage />} />
+              <Route path="product/:id" element={<SingleProduct />} />
             </Routes>
           </BrowserRouter>
         </ThemeContextProvider>

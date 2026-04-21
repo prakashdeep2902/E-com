@@ -32,8 +32,6 @@
   flex: 1;
   max-width: 550px;
   display: flex;
-  
- 
 }
 
 .search-box input {
@@ -43,7 +41,7 @@
   border-right: none;
   outline: none;
   font-size: 15px;
- border-radius: .5rem 0 0 .5rem;
+  border-radius: 0.5rem 0 0 0.5rem;
 }
 
 .search-box button {
@@ -56,7 +54,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-   border-radius: 0 .5rem .5rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
 }
 
 /* Icons */
@@ -73,11 +71,30 @@
   cursor: pointer;
   font-size: 22px;
   color: #111;
+  position: relative;
 }
 
 .icon-box span {
   font-size: 13px;
   margin-top: 4px;
+}
+
+.NoOfItems {
+  display: flex;
+  position: absolute;
+  top: -14px;
+  border: 1px solid;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 17px;
+  right: -13px;
+  background: red;
+  color: #fff;
+  font-size: large;
 }
 
 /* Navbar */
@@ -100,8 +117,6 @@
   color: #666;
 }
 
-
-
 .theme-toggle {
   width: 62px;
   height: 34px;
@@ -114,8 +129,6 @@
   align-items: center;
   transition: 0.3s ease;
 }
-
-
 
 .toggle-circle {
   width: 26px;
@@ -130,19 +143,13 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-.dark{
-
-    transform: translateX(0%);
-
+.dark {
+  transform: translateX(0%);
 }
-
-
 
 .theme-toggle:hover {
   transform: scale(1.05);
 }
-
-
 
 .theme-toggle.active {
   background: linear-gradient(135deg, #facc15, #f59e0b);
@@ -151,8 +158,6 @@
 .theme-toggle.active .toggle-circle {
   transform: translateX(28px);
 }
-
-
 
 @media (max-width: 992px) {
   .top-header {

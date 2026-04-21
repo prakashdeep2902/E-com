@@ -9,15 +9,15 @@ import { useContext } from "react";
 import { FaMoon } from "react-icons/fa";
 import { ThemeContext } from "../../context/ThemContext";
 import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
 
 const Header = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
-
+  const { numOfCartItems } = useCart()
   const navgiation = useNavigate()
 
   return (
     <header className="header">
-      {/* Top Header */}
       <div className="top-header">
         <h2 className="logo">ShopKart</h2>
 
@@ -35,6 +35,11 @@ const Header = () => {
           </div>
 
           <div className="icon-box" onClick={() => navgiation("/cart")}>
+
+
+            <div className="NoOfItems">
+              {numOfCartItems}
+            </div>
             <IoCartOutline />
             <span>Cart</span>
           </div>

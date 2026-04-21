@@ -2,30 +2,31 @@ import "./Home.css";
 import { FaStar } from "react-icons/fa";
 
 import { ApiContext } from "../../context/APiContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { useCart } from "../../context/CartContext";
+import { convertTorupess } from "../../utils";
 const Home = () => {
 
   const { products, loading } = useContext(ApiContext)
   const Products = products?.products
+  const [addedId, setAddedId] = useState(null);
+  const { addToCart, setCartItems, removeToCart, cartItem } = useCart()
 
-  console.log("Products:::::===>", Products);
-
-
-  const uniqueCategories = [
-    ...new Map(
-      Products?.map(p => [p.category, { id: p.id, cat: p.category, url: `/category/${p.category}` }])
-    ).values()
-  ];
   const categories = Array.from(new Map(Products?.map((value) => [value.category, { categoryName: value.category, url: `/category/${value.category}` }
   ])).values())
 
   const AllThumbnail = Array.from(new Map(Products?.map((value) => [value.thumbnail, { thumb: value.thumbnail }])).values())
 
+  const handleClick = (item) => {
+    addToCart(item);
+    setAddedId(item.id);
+    setTimeout(() => setAddedId(null), 1200);
+  };
+
 
 
   return (
     <div className="home-page">
-      {/* Hero Section */}
       <section className="hero">
         <div className="hero-left">
           <h1>Best Products For Your Lifestyle</h1>
@@ -42,25 +43,20 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Categories */}
       <section className="categories">
         <h2>Popular Categories</h2>
 
         <div className="category-grid">
-
           {
             categories && categories.map(({ categoryName, url }) => (
               <a className="cat-box" href={url}>{categoryName}</a>
             ))
           }
-
         </div>
       </section>
 
-      {/* Featured Products */}
       <section className="featured-products">
         <h2>Featured Products</h2>
-
         <div className="product-grid">
           {Products && Products.map((item) => {
             return <div className="card" key={item.id}>
@@ -76,14 +72,14 @@ const Home = () => {
                 <FaStar />
               </div>
 
-              <p>₹{(() => {
-                const PriceIndollers = item.price
-                const currDollerPrice = 93.39;
-                const IR = PriceIndollers * currDollerPrice
-                return IR.toFixed(2)
-              })()}</p>
+              <p>₹{convertTorupess(item.price)}</p>
 
-              <button>Add to Cart</button>
+              <button
+                className={`cart-btn ${addedId === item.id ? "added" : ""}`}
+                onClick={() => handleClick(item)}
+              >
+                {addedId === item.id ? "✔ Added" : "Add to Cart"}
+              </button>
             </div>
           })}
         </div>
@@ -98,7 +94,6 @@ const Home = () => {
         <button>Buy Now</button>
       </section>
 
-      {/* Footer */}
       <footer className="footer">
         <p>© 2026 ShopKart. All rights reserved.</p>
       </footer>

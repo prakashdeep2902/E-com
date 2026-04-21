@@ -1,32 +1,27 @@
 import "./Home.css";
 import { FaStar } from "react-icons/fa";
+
+import { ApiContext } from "../../context/APiContext";
+import { useContext } from "react";
 const Home = () => {
-  const products = [
-    {
-      id: 1,
-      image: "https://via.placeholder.com/250x220",
-      title: "Modern Chair",
-      price: "$120",
-    },
-    {
-      id: 2,
-      image: "https://via.placeholder.com/250x220",
-      title: "Wireless Headphone",
-      price: "$85",
-    },
-    {
-      id: 3,
-      image: "https://via.placeholder.com/250x220",
-      title: "Premium Lamp",
-      price: "$60",
-    },
-    {
-      id: 4,
-      image: "https://via.placeholder.com/250x220",
-      title: "Gaming Keyboard",
-      price: "$95",
-    },
+
+  const { products, loading } = useContext(ApiContext)
+  const Products = products?.products
+
+  console.log("Products:::::===>", Products);
+
+
+  const uniqueCategories = [
+    ...new Map(
+      Products?.map(p => [p.category, { id: p.id, cat: p.category, url: `/category/${p.category}` }])
+    ).values()
   ];
+  const categories = Array.from(new Map(Products?.map((value) => [value.category, { categoryName: value.category, url: `/category/${value.category}` }
+  ])).values())
+
+  const AllThumbnail = Array.from(new Map(Products?.map((value) => [value.thumbnail, { thumb: value.thumbnail }])).values())
+
+
 
   return (
     <div className="home-page">
@@ -43,7 +38,7 @@ const Home = () => {
         </div>
 
         <div className="hero-right">
-          <img src="https://via.placeholder.com/520x350" alt="banner" />
+          <img src="https://cdn.dummyjson.com/product-images/groceries/dog-food/thumbnail.webp" alt="banner" />
         </div>
       </section>
 
@@ -52,10 +47,13 @@ const Home = () => {
         <h2>Popular Categories</h2>
 
         <div className="category-grid">
-          <div className="cat-box">Furniture</div>
-          <div className="cat-box">Electronics</div>
-          <div className="cat-box">Fashion</div>
-          <div className="cat-box">Home Decor</div>
+
+          {
+            categories && categories.map(({ categoryName, url }) => (
+              <a className="cat-box" href={url}>{categoryName}</a>
+            ))
+          }
+
         </div>
       </section>
 
@@ -64,9 +62,9 @@ const Home = () => {
         <h2>Featured Products</h2>
 
         <div className="product-grid">
-          {products.map((item) => (
-            <div className="card" key={item.id}>
-              <img src={item.image} alt={item.title} />
+          {Products && Products.map((item) => {
+            return <div className="card" key={item.id}>
+              <img src={item.thumbnail} alt={item.title} />
 
               <h3>{item.title}</h3>
 
@@ -78,11 +76,16 @@ const Home = () => {
                 <FaStar />
               </div>
 
-              <p>{item.price}</p>
+              <p>₹{(() => {
+                const PriceIndollers = item.price
+                const currDollerPrice = 93.39;
+                const IR = PriceIndollers * currDollerPrice
+                return IR.toFixed(2)
+              })()}</p>
 
               <button>Add to Cart</button>
             </div>
-          ))}
+          })}
         </div>
       </section>
 

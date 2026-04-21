@@ -8,10 +8,12 @@ import { CiSun } from "react-icons/ci";
 import { useContext } from "react";
 import { FaMoon } from "react-icons/fa";
 import { ThemeContext } from "../../context/ThemContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
+
+  const navgiation = useNavigate()
 
   return (
     <header className="header">
@@ -32,7 +34,7 @@ const Header = () => {
             <span>Account</span>
           </div>
 
-          <div className="icon-box">
+          <div className="icon-box" onClick={() => navgiation("/cart")}>
             <IoCartOutline />
             <span>Cart</span>
           </div>

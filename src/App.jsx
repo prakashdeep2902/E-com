@@ -7,6 +7,7 @@ import About from "./component/About/About";
 import Contact from "./component/Contact/Contact";
 import { Apifetch } from "./helper/Apifetch";
 import ApiProvider from "./context/APiContext";
+import CartPage from "./component/cart/CartPage";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
             <Route path="/product" element={<Product />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/cart" element={<CartPage />} />
           </Routes>
         </BrowserRouter>
       </ThemeContextProvider>

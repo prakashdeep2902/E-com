@@ -9,7 +9,7 @@ const ApiProvider = ({ children }) => {
 
   const getProducts = async () => {
     try {
-      const res = await fetch("https://fakestoreapi.com/products");
+      const res = await fetch("https://dummyjson.com/products");
       const data = await res.json();
       setProducts(data);
     } catch (error) {
@@ -17,6 +17,8 @@ const ApiProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
+
+
   };
 
   useEffect(() => {

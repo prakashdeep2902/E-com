@@ -7,6 +7,7 @@ body {
   display: flex;
   gap: 20px;
   padding: 30px;
+  position: relative;
 }
 
 /* Sidebar */
@@ -21,8 +22,13 @@ body {
 
 .breadcrumb {
   font-size: 13px;
-  color: gray;
   margin-bottom: 20px;
+  position: absolute;
+  top: 0.4rem;
+  font-size: 1rem;
+  left: 2rem;
+  color: #111;
+  font-weight: bold;
 }
 
 .filter-box {

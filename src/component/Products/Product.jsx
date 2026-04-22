@@ -1,37 +1,47 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Product.css";
 import { FaBars, FaGripHorizontal, FaStar } from "react-icons/fa";
 import { ApiContext } from "../../context/APiContext";
 import { convertTorupess, findOutAllCategory } from "../../utils";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Product = () => {
   const { products, loading } = useContext(ApiContext);
+  const [Products, setProducts] = useState([])
   const [isChecked, setIsChecked] = useState(false);
-  const Products = products?.products;
+  const [catProduct, setCatProduct] = useState([])
+  const navigation = useNavigate()
+  const { cateName } = useParams()
+
+  useEffect(() => {
+    if (cateName) {
+      const FilterProductWithCatName = Products?.filter((pro) => pro.category == cateName)
+      setProducts(FilterProductWithCatName)
+    }
+    else {
+      setProducts(products?.product)
+    }
+  }, [])
+
   const Brands = Array.from(
     new Map(
       Products?.map((product) => [product.brand, { brand: product.brand, id: product.id }]),
     ).values(),
   );
 
+
+
   const RealatedCategory = findOutAllCategory(Products)
 
-  const HandelBrandFilter = (e) => {
-    setIsChecked(!isChecked);
-
-  }
 
 
-  const navigation = useNavigate()
+
 
   return (
     <div className="product-page">
-
+      <p className="breadcrumb">  {cateName ? `Home / Category / ${cateName}` : "Home / All Product"}</p>
       <aside className="sidebar">
-        <p className="breadcrumb">Home / Category / Items</p>
-
         <div className="filter-box">
           <h4>Related Category</h4>
           <ul>
@@ -56,7 +66,8 @@ const Product = () => {
                   {brand}
                 </label>
               );
-            })}
+            })
+          }
         </div>
 
         <div className="filter-box">
@@ -100,7 +111,7 @@ const Product = () => {
 
         <div className="product-grid" >
           {Products?.map((item) => (
-            <div className="card" key={item.id} onClick={() => navigation(`/${item.id}`)}>
+            <div className="card" key={item.id} onClick={() => navigation(`/product/${item.id}`)}>
               <img src={item.thumbnail} alt={item.title} />
               <h3>₹{convertTorupess(item.price)}</h3>
               <div className="rating">

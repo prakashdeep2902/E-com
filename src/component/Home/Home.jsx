@@ -4,6 +4,7 @@ import { ApiContext } from "../../context/APiContext";
 import { useContext, useState } from "react";
 import { useCart } from "../../context/CartContext";
 import { convertTorupess } from "../../utils";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
 
   const { products, loading } = useContext(ApiContext)
@@ -13,8 +14,8 @@ const Home = () => {
 
   const categories = Array.from(new Map(Products?.map((value) => [value.category, { categoryName: value.category, url: `/category/${value.category}` }
   ])).values())
-
   const AllThumbnail = Array.from(new Map(Products?.map((value) => [value.thumbnail, { thumb: value.thumbnail }])).values())
+
 
   const handleClick = (item) => {
     addToCart(item);
@@ -22,7 +23,12 @@ const Home = () => {
     setTimeout(() => setAddedId(null), 1200);
   };
 
+  const navigate = useNavigate()
 
+  const handelCatgory = (url) => {
+    navigate(url, { state: {} })
+
+  }
 
   return (
     <div className="home-page">
@@ -48,7 +54,7 @@ const Home = () => {
         <div className="category-grid">
           {
             categories && categories.map(({ categoryName, url }) => (
-              <a className="cat-box" href={url}>{categoryName}</a>
+              <div className="cat-box" onClick={() => handelCatgory(url)}>{categoryName}</div>
             ))
           }
         </div>
@@ -60,9 +66,7 @@ const Home = () => {
           {Products && Products?.map((item) => {
             return <div className="card" key={item.id}>
               <img src={item.thumbnail} alt={item.title} />
-
               <h3>{item.title}</h3>
-
               <div className="rating">
                 <FaStar />
                 <FaStar />
@@ -70,9 +74,7 @@ const Home = () => {
                 <FaStar />
                 <FaStar />
               </div>
-
               <p>₹{convertTorupess(item.price)}</p>
-
               <button
                 className={`cart-btn ${addedId === item.id ? "added" : ""}`}
                 onClick={() => handleClick(item)}

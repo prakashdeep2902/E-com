@@ -25,6 +25,7 @@ const App = () => {
               <Route path="/contact" element={<Contact />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="product/:id" element={<SingleProduct />} />
+              <Route path="category/:cateName" element={<Product />} />
             </Routes>
           </BrowserRouter>
         </ThemeContextProvider>

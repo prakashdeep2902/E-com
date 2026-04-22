@@ -8,48 +8,111 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const Product = () => {
   const { products, loading } = useContext(ApiContext);
-  const [Products, setProducts] = useState([])
+  const [Products, setProducts] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
-  const [catProduct, setCatProduct] = useState([])
-  const navigation = useNavigate()
-  const { cateName } = useParams()
+  const [catProduct, setCatProduct] = useState([]);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+
+  const navigation = useNavigate();
+  const { cateName } = useParams();
+
+
+  const fullProduct = products?.products;
 
   useEffect(() => {
     if (cateName) {
-      const FilterProductWithCatName = Products?.filter((pro) => pro.category == cateName)
-      setProducts(FilterProductWithCatName)
+      const filtered = fullProduct?.filter(
+        (pro) => pro.category === cateName
+      );
+      setProducts(filtered);
+    } else {
+      setProducts(fullProduct);
     }
-    else {
-      setProducts(products?.product)
-    }
-  }, [])
+  }, [products, cateName]);
 
   const Brands = Array.from(
     new Map(
-      Products?.map((product) => [product.brand, { brand: product.brand, id: product.id }]),
+      Products?.map((product) => [
+        product.brand,
+        { brand: product.brand, id: product.id },
+      ]),
     ).values(),
   );
 
+  const RealatedCategory = findOutAllCategory(Products);
+
+  const handelSelect = (e) => {
+    const whichOrder = e.target.value;
+
+    switch (whichOrder) {
+      case "Low Price":
+        const Aces = [...Products].sort((a, b) => a.price - b.price);
+        setProducts(Aces)
+        break;
+
+      case "High Price":
+        const Desc = [...Products].sort((a, b) => b.price - a.price);
+        setProducts(Desc)
+        break;
+
+      default:
+        setProducts(() => {
+          return fullProduct?.filter(
+            (pro) => pro.category == cateName,
+          )
+        })
+    }
+  };
+
+  const handelCheckBox = (e) => {
+    const { value, checked } = e.target;
+
+    let updatedBrands = [];
+
+    if (checked) {
+      updatedBrands = [...selectedBrands, value];
+    } else {
+      updatedBrands = selectedBrands.filter(
+        (item) => item !== value
+      );
+    }
 
 
-  const RealatedCategory = findOutAllCategory(Products)
+    console.log("updatedBrands:::::::::", updatedBrands)
+    setSelectedBrands(updatedBrands);
 
+    let baseProducts = cateName
+      ? fullProduct?.filter(
+        (pro) => pro.category === cateName
+      )
+      : fullProduct;
 
+    if (updatedBrands.length > 0) {
+      const filtered = baseProducts.filter((product) =>
+        updatedBrands.includes(product.brand)
+      );
 
+      setProducts(filtered);
+    } else {
+      setProducts(baseProducts);
+    }
+  };
 
 
   return (
     <div className="product-page">
-      <p className="breadcrumb">  {cateName ? `Home / Category / ${cateName}` : "Home / All Product"}</p>
+      <p className="breadcrumb">
+        {" "}
+        {cateName ? `Home / Category / ${cateName}` : "Home / All Product"}
+      </p>
       <aside className="sidebar">
         <div className="filter-box">
           <h4>Related Category</h4>
           <ul>
-            {
-              RealatedCategory && RealatedCategory.map(({ category, id }) => {
-                return <li key={id}>{category}</li>
-              })
-            }
+            {RealatedCategory &&
+              RealatedCategory.map(({ category, id }) => {
+                return <li key={id}>{category}</li>;
+              })}
           </ul>
         </div>
 
@@ -62,12 +125,11 @@ const Product = () => {
               }
               return (
                 <label key={id}>
-                  <input type="checkbox" checked={isChecked} onChange={HandelBrandFilter} />
+                  <input type="checkbox" value={brand} onChange={handelCheckBox} />
                   {brand}
                 </label>
               );
-            })
-          }
+            })}
         </div>
 
         <div className="filter-box">
@@ -79,39 +141,32 @@ const Product = () => {
           </div>
           <button>Apply</button>
         </div>
-
       </aside>
 
       <main className="products-section">
         <div className="top-bar">
           <p>
-            {Products?.length} items
+            {cateName && cateName
+              ? `${cateName.charAt(0).toUpperCase() + cateName.slice(1)} Category has ${Products?.length} items`
+              : `${Products?.length} items`}
           </p>
 
           <div className="top-actions">
-            <label>
-              <input type="checkbox" /> Verified only
-            </label>
-
-            <select>
+            <select onChange={handelSelect}>
               <option>Best Match</option>
               <option>Low Price</option>
               <option>High Price</option>
             </select>
-
-            <button>
-              <FaBars />
-            </button>
-
-            <button>
-              <FaGripHorizontal />
-            </button>
           </div>
         </div>
 
-        <div className="product-grid" >
+        <div className="product-grid">
           {Products?.map((item) => (
-            <div className="card" key={item.id} onClick={() => navigation(`/product/${item.id}`)}>
+            <div
+              className="card"
+              key={item.id}
+              onClick={() => navigation(`/product/${item.id}`)}
+            >
               <img src={item.thumbnail} alt={item.title} />
               <h3>₹{convertTorupess(item.price)}</h3>
               <div className="rating">

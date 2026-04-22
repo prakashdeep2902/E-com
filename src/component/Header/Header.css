@@ -32,6 +32,7 @@
   flex: 1;
   max-width: 550px;
   display: flex;
+  position: relative;
 }
 
 .search-box input {
@@ -57,7 +58,35 @@
   border-radius: 0 0.5rem 0.5rem 0;
 }
 
-/* Icons */
+.SearchList {
+  position: absolute;
+  max-width: 550px;
+  width: 100%;
+  height: 15rem;
+  overflow-y: scroll;
+  top: 2.8rem;
+  z-index: 10;
+  background: #fff;
+}
+
+.SearchList ul {
+  list-style-type: none;
+  padding: 1rem;
+  width: 100%;
+}
+
+.SearchList ul li {
+  padding: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+.SearchList ul li:hover {
+  background-color: #666;
+  border-radius: 0.5rem;
+  color: #fff;
+}
 
 .header-icons {
   display: flex;

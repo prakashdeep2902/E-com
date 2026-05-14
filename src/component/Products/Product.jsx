@@ -78,7 +78,6 @@ const Product = () => {
     }
 
 
-    console.log("updatedBrands:::::::::", updatedBrands)
     setSelectedBrands(updatedBrands);
 
     let baseProducts = cateName

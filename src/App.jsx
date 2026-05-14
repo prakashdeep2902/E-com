@@ -10,6 +10,7 @@ import ApiProvider from "./context/APiContext";
 import CartPage from "./component/cart/CartPage";
 import { CartProvider } from "./context/CartContext";
 import SingleProduct from "./component/singleproduct/SingleProduct";
+import SallerUser from "./component/Users/SellerUser";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
               <Route path="/cart" element={<CartPage />} />
               <Route path="product/:id" element={<SingleProduct />} />
               <Route path="category/:cateName" element={<Product />} />
+               <Route path="/create/seller/user" element={<SallerUser />} />
             </Routes>
           </BrowserRouter>
         </ThemeContextProvider>

@@ -1,5 +1,4 @@
-import axios from "axios";
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const ApiContext = createContext();
 

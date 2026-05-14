@@ -14,7 +14,7 @@ import { ApiContext } from "../../context/APiContext";
 
 const Header = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const { products, loading } = useContext(ApiContext);
+  const { products } = useContext(ApiContext);
   const { numOfCartItems } = useCart();
   const navgiation = useNavigate();
   const [InputValue, setInputValue] = useState(false);
